@@ -25,6 +25,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   itemsQtyForPage = 12;
   pages = [100, 50, 30, 20, 10];
   errorAvailable = false;
+  error: any;
 
   constructor(
     private githubService: GithubService,
@@ -64,6 +65,9 @@ export class HomeComponent implements OnInit, OnDestroy {
       .subscribe(
         (res: any) => {
           if (res) {
+            if (this.error) {
+              this.errorAvailable = false;
+            }
             this.totalCount = res.total_count;
             this.users = res.items.map((user: Users) => {
               return {
@@ -76,6 +80,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         },
         (error: any) => {
           if (error) {
+            this.error = error;
             if (this.users && this.users.length > 0) {
               this.users.length = 0;
             }
