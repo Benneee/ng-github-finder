@@ -18,7 +18,7 @@
             <div class="col-md-3 col-3">
               <button
                 class="btn btn-success mb-2"
-                [disabled]="searchForm.invalid"
+                [disabled]="searchForm.invalid || isLoading"
               >
                 <i class="fas fa-cog fa-spin" [hidden]="!isLoading"></i>
                 Search <i class="fas fa-search"></i>
@@ -31,6 +31,9 @@
   </div>
 
   <div class="container my-3" *ngIf="users?.length > 0 && !isLoading">
+    <p class="mb-4 font-weight-bold lead" *ngIf="totalCount > 1">
+      {{ totalCount }} result(s) found
+    </p>
     <div class="row">
       <div
         class="col-md-3 col-12"
@@ -44,7 +47,7 @@
             <img
               [src]="user?.avatar_url"
               alt="{{ user?.login }}"
-              class="img-fluid"
+              class="img-fluid pic"
             />
           </div>
           <div class="card-body">
@@ -70,7 +73,7 @@
               <div class="col-12">
                 <button
                   class="btn btn-block btn-success btn-md"
-                  (click)="onViewModal(user)"
+                  (click)="onViewModal(view, user)"
                 >
                   View Info
                   <i class="fas fa-eye" [hidden]="modalLoading"></i>
@@ -140,3 +143,122 @@
     </div>
   </div>
 </div>
+
+<ng-template #view let-c="close" let-d="dismiss" let-modal>
+  <button
+    class="search-close"
+    aria-label="Close search form"
+    (click)="dismissModal()"
+    type="button"
+  >
+    <i class="fas fa-times"></i>
+  </button>
+
+  <div class="container" *ngIf="profileInfo && !modalLoading">
+    <div class="col-md-8 offset-md-2 col-12">
+      <div class="card border-0 my-2">
+        <div class="card-img">
+          <img
+            [src]="profileInfo?.avatar_url"
+            alt="{{ profileInfo?.name }}"
+            class="img-fluid"
+          />
+        </div>
+        <div class="card-body">
+          <p class="text-center font-weight-bold github-name text-capitalize">
+            <span>
+              {{ profileInfo?.name }}
+            </span>
+          </p>
+          <div class="row text-center">
+            <div class="col-12 mb-2">
+              <button class="btn btn-block btn-primary btn-md">
+                <a
+                  [href]="profileInfo?.html_url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-light github-link"
+                >
+                  GitHub Profile
+                  <i class="fas fa-external-link-alt"></i>
+                </a>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 ">
+        <p class="font-weight-bold">
+          {{ profileInfo?.bio }}
+        </p>
+      </div>
+    </div>
+
+    <div class="col-12 mb-3">
+      <div class="extra-info d-flex mb-3 justify-content-around">
+        <p>
+          Following
+          <span class="badge badge-pill badge-primary">
+            {{ profileInfo?.following }}
+          </span>
+        </p>
+
+        <p>
+          Followers
+          <span class="badge badge-pill badge-success">
+            {{ profileInfo?.followers }}
+          </span>
+        </p>
+
+        <p>
+          Public Repos
+          <span class="badge badge-pill badge-secondary">
+            {{ profileInfo?.public_repos }}
+          </span>
+        </p>
+      </div>
+      <p class="font-weight-bold mb-2">Latest Active Repositories</p>
+      <div class="row">
+        <div class="col-md-6 col-12" *ngFor="let repo of repoInfo">
+          <div class="card my-2">
+            <div class="card-body">
+              <p class="font-weight-bold mb-2">
+                {{
+                  repo?.name.length > 16
+                    ? (repo?.name | slice: 0:16) + '..'
+                    : repo?.name
+                }}
+              </p>
+
+              <p *ngIf="repo.description !== null" class="mb-2">
+                {{ repo?.description | slice: 0:36 }}
+                <a
+                  [href]="repo?.html_url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >... see more</a
+                >
+              </p>
+
+              <p *ngIf="repo.description === null" class="mb-2">
+                <a
+                  [href]="repo?.html_url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Go to repo!</a
+                >
+              </p>
+
+              <span class="mr-3"
+                >{{ repo?.stargazers_count }} <i class="fas fa-star"></i>
+              </span>
+              <span>{{ repo?.forks }} </span> <i class="fas fa-code-branch"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
