@@ -12,6 +12,15 @@
 @import "~@fortawesome/fontawesome-free/scss/brands.scss";
 @import "~@fortawesome/fontawesome-free/scss/regular.scss";
 @import "~@fortawesome/fontawesome-free/scss/solid.scss";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+@import "~ngx-toastr/toastr-bs4-alert"; // ngx toastr
+@import url("https://fonts.googleapis.com/css?family=Poppins:400,600,700,800&display=swap");
 
 // Theme customization
 @import "theme/theme";
+
+*:not(.fas) {
+  font-family: "Poppins", sans-serif;
+}
