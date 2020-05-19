@@ -8,10 +8,14 @@ input,
 }
 
 .card-img {
-  img {
+  .pic {
     height: 253.01px;
     width: 253.01px;
   }
+}
+
+.extra-info {
+  border-bottom: 0.1rem solid rgb(44, 175, 131);
 }
 
 .github-name {
@@ -32,7 +36,7 @@ input,
   }
 
   .card-img {
-    img {
+    .pic {
       height: unset;
       width: unset;
     }

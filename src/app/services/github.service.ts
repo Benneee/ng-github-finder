@@ -14,10 +14,6 @@ export interface Users {
   login: string;
 }
 
-// export interface User {
-
-// }
-
 @Injectable({
   providedIn: 'root'
 })
@@ -32,5 +28,15 @@ export class GithubService extends BaseService<any> {
 
   getUserProfileInfo(user: string): Observable<any> {
     return this.sendGet(`${routes.users}/${user}`);
+  }
+
+  getUserRepos(
+    user: string,
+    sort: string = 'created:asc',
+    per_page: number = 6
+  ): Observable<any> {
+    return this.sendGet(
+      `${routes.users}/${user}/repos?per_page=${per_page}&sort=${sort}`
+    );
   }
 }

@@ -28,6 +28,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   error: any;
   selectedUser: any;
   modalLoading = false;
+  profileInfo: any;
+  repoInfo: any;
 
   constructor(
     private githubService: GithubService,
@@ -105,7 +107,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       .subscribe(
         (res: any) => {
           if (res) {
-            log.debug('res: ', res);
+            this.profileInfo = res;
           }
         },
         (error: any) => {
@@ -114,14 +116,37 @@ export class HomeComponent implements OnInit, OnDestroy {
       );
   }
 
-  // onViewModal(view: any, user: any) {
-  onViewModal(user: Users) {
+  getRepoInfo(username: string) {
+    this.modalLoading = true;
+    const repoInfo$ = this.githubService.getUserRepos(username);
+    repoInfo$
+      .pipe(
+        finalize(() => {
+          this.modalLoading = false;
+        }),
+        untilDestroyed(this)
+      )
+      .subscribe(
+        (res: any) => {
+          if (res) {
+            this.repoInfo = res;
+            log.debug('res: ', this.repoInfo);
+          }
+        },
+        (error: any) => {
+          log.debug('error: ', error);
+        }
+      );
+  }
+
+  onViewModal(view: any, user: any) {
     this.selectedUser = user;
     this.getMoreProfileInfo(user.login);
-    // this.modalRef = this.modalService.open(view, {
-    //   windowClass: 'medium confirm',
-    //   backdrop: true
-    // });
+    this.getRepoInfo(user.login);
+    this.modalRef = this.modalService.open(view, {
+      windowClass: 'medium confirm',
+      backdrop: true
+    });
   }
 
   dismissModal() {
