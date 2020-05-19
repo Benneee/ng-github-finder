@@ -1,3 +1,30 @@
-<div class="container-fluid">
-  Hello world
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 offset-md-1 col-12">
+      <h4 class="heading my-3">
+        <i class="fas fa-search fa-1x"></i> &nbsp; Search for users on GitHub
+      </h4>
+      <form [formGroup]="searchForm" (ngSubmit)="search()" class="container">
+        <div class="row">
+          <div class="form-group col-md-9 col-9">
+            <input
+              type="text"
+              formControlName="query"
+              placeholder="Enter GitHub Username"
+              class="form-control"
+            />
+          </div>
+          <div class="col-md-3 col-3">
+            <button
+              class="btn btn-success mb-2"
+              [disabled]="searchForm.invalid"
+            >
+              <i class="fas fa-cog fa-spin" [hidden]="!isLoading"></i>
+              Search <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

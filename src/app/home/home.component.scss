@@ -1,9 +1,16 @@
-.logo {
-  width: 100px;
+input,
+.heading {
+  font-family: "Poppins", sans-serif;
 }
 
-q {
-  font-style: italic;
-  font-size: 1.2rem;
-  quotes: "« " " »";
+@media screen and (max-width: 570px) {
+  .heading {
+    font-size: 1.3rem;
+  }
+
+  .btn {
+    .fa-search {
+      display: none;
+    }
+  }
 }
