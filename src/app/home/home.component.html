@@ -70,10 +70,11 @@
               <div class="col-12">
                 <button
                   class="btn btn-block btn-success btn-md"
-                  (click)="showMoreInfo()"
+                  (click)="onViewModal(user)"
                 >
                   View Info
-                  <i class="fas fa-eye"></i>
+                  <i class="fas fa-eye" [hidden]="modalLoading"></i>
+                  <i class="fas fa-cog fa-spin" [hidden]="!modalLoading"></i>
                 </button>
               </div>
             </div>

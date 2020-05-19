@@ -26,6 +26,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   pages = [100, 50, 30, 20, 10];
   errorAvailable = false;
   error: any;
+  selectedUser: any;
+  modalLoading = false;
 
   constructor(
     private githubService: GithubService,
@@ -90,8 +92,46 @@ export class HomeComponent implements OnInit, OnDestroy {
       );
   }
 
-  showMoreInfo() {
-    log.debug('info');
+  getMoreProfileInfo(username: string) {
+    this.modalLoading = true;
+    const userProfile$ = this.githubService.getUserProfileInfo(username);
+    userProfile$
+      .pipe(
+        finalize(() => {
+          this.modalLoading = false;
+        }),
+        untilDestroyed(this)
+      )
+      .subscribe(
+        (res: any) => {
+          if (res) {
+            log.debug('res: ', res);
+          }
+        },
+        (error: any) => {
+          log.debug('error: ', error);
+        }
+      );
+  }
+
+  // onViewModal(view: any, user: any) {
+  onViewModal(user: Users) {
+    this.selectedUser = user;
+    this.getMoreProfileInfo(user.login);
+    // this.modalRef = this.modalService.open(view, {
+    //   windowClass: 'medium confirm',
+    //   backdrop: true
+    // });
+  }
+
+  dismissModal() {
+    this.modalRef.dismiss();
+    this.selectedUser = null;
+  }
+
+  dismissAllModals() {
+    this.modalService.dismissAll();
+    this.selectedUser = null;
   }
 
   refreshAfterFilter() {
