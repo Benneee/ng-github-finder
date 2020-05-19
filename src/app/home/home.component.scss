@@ -3,6 +3,23 @@ input,
   font-family: "Poppins", sans-serif;
 }
 
+.github-link {
+  text-decoration: none;
+}
+
+.card-img {
+  img {
+    height: 253.01px;
+    width: 253.01px;
+  }
+}
+
+.github-name {
+  span {
+    border-bottom: 0.3rem solid rgb(44, 175, 131);
+  }
+}
+
 @media screen and (max-width: 570px) {
   .heading {
     font-size: 1.3rem;
@@ -11,6 +28,13 @@ input,
   .btn {
     .fa-search {
       display: none;
+    }
+  }
+
+  .card-img {
+    img {
+      height: unset;
+      width: unset;
     }
   }
 }

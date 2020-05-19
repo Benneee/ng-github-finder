@@ -8,6 +8,16 @@ const routes = {
   users: 'users'
 };
 
+export interface Users {
+  avatar_url: string;
+  html_url: string;
+  login: string;
+}
+
+// export interface User {
+
+// }
+
 @Injectable({
   providedIn: 'root'
 })
