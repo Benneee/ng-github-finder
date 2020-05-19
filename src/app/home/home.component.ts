@@ -5,6 +5,7 @@ import { GithubService, Users } from './../services/github.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 const log = new Logger('Search');
 
@@ -16,16 +17,19 @@ const log = new Logger('Search');
 export class HomeComponent implements OnInit, OnDestroy {
   isLoading = false;
   searchForm: FormGroup;
+  modalRef: NgbModalRef;
   totalCount: number;
   users: Users[];
   p: any;
   totalLengthOfItems: number;
   itemsQtyForPage = 12;
   pages = [100, 50, 30, 20, 10];
+  errorAvailable = false;
 
   constructor(
     private githubService: GithubService,
     private fb: FormBuilder,
+    private modalService: NgbModal,
     private router: Router
   ) {}
 
@@ -60,7 +64,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       .subscribe(
         (res: any) => {
           if (res) {
-            log.debug('res: ', res);
             this.totalCount = res.total_count;
             this.users = res.items.map((user: Users) => {
               return {
@@ -72,7 +75,12 @@ export class HomeComponent implements OnInit, OnDestroy {
           }
         },
         (error: any) => {
-          log.debug('error', error);
+          if (error) {
+            if (this.users && this.users.length > 0) {
+              this.users.length = 0;
+            }
+            this.errorAvailable = true;
+          }
         }
       );
   }
@@ -82,7 +90,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   refreshAfterFilter() {
-    this.router.navigateByUrl('/').then(() => {
+    this.router.navigateByUrl('/about').then(() => {
       this.router.navigate(['/', 'home']);
     });
   }
