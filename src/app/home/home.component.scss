@@ -1,9 +1,44 @@
-.logo {
-  width: 100px;
+input,
+.heading {
+  font-family: "Poppins", sans-serif;
 }
 
-q {
-  font-style: italic;
-  font-size: 1.2rem;
-  quotes: "« " " »";
+.github-link {
+  text-decoration: none;
+}
+
+.card-img {
+  .pic {
+    height: 253.01px;
+    width: 253.01px;
+  }
+}
+
+.extra-info {
+  border-bottom: 0.1rem solid rgb(44, 175, 131);
+}
+
+.github-name {
+  span {
+    border-bottom: 0.3rem solid rgb(44, 175, 131);
+  }
+}
+
+@media screen and (max-width: 570px) {
+  .heading {
+    font-size: 1.2rem;
+  }
+
+  .btn {
+    .fa-search {
+      display: none;
+    }
+  }
+
+  .card-img {
+    .pic {
+      height: unset;
+      width: unset;
+    }
+  }
 }

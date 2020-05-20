@@ -1,9 +1,3 @@
-/*
- * Entry point of global application style.
- * Component-specific style should not go here and be included directly as part of the components.
- */
-
-// Theme variables, must be included before the libraries to allow overriding defaults
 @import "theme/theme-variables";
 
 // 3rd party libraries
@@ -12,6 +6,26 @@
 @import "~@fortawesome/fontawesome-free/scss/brands.scss";
 @import "~@fortawesome/fontawesome-free/scss/regular.scss";
 @import "~@fortawesome/fontawesome-free/scss/solid.scss";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+@import "~ngx-toastr/toastr-bs4-alert"; // ngx toastr
+@import url("https://fonts.googleapis.com/css?family=Poppins:400,600,700,800&display=swap");
 
 // Theme customization
 @import "theme/theme";
+
+body {
+  position: relative;
+  overflow-y: auto;
+  min-height: 100vh;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+}
+
+.btn {
+  cursor: pointer;
+}
