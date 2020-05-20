@@ -22,8 +22,8 @@ export class GithubService extends BaseService<any> {
     super(httpClient);
   }
 
-  searchUsers(query: string, pageQty: number = 100): Observable<any> {
-    return this.sendGet(`${routes.search}?q=${query}&per_page=${pageQty}`);
+  searchUsers(query: string, page: number = 1): Observable<any> {
+    return this.sendGet(`${routes.search}?q=${query}&page=${page}`);
   }
 
   getUserProfileInfo(user: string): Observable<any> {

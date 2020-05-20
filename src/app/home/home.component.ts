@@ -21,7 +21,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   totalCount: number;
   users: Users[];
   p: any;
-  totalLengthOfItems: number;
   itemsQtyForPage = 12;
   pages = [100, 50, 30, 20, 10];
   errorAvailable = false;
@@ -52,13 +51,12 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   search() {
     const { query } = this.searchForm.value;
-    this.searchForm.reset();
     this.getUsers(query);
   }
 
-  getUsers(query: string) {
+  getUsers(query: string, page?: number) {
     this.isLoading = true;
-    const users$ = this.githubService.searchUsers(query);
+    const users$ = this.githubService.searchUsers(query, page);
     users$
       .pipe(
         finalize(() => {
@@ -130,7 +128,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         (res: any) => {
           if (res) {
             this.repoInfo = res;
-            log.debug('res: ', this.repoInfo);
           }
         },
         (error: any) => {
@@ -170,5 +167,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (pageQtyValue !== null || pageQtyValue !== undefined) {
       this.itemsQtyForPage = pageQtyValue;
     }
+  }
+
+  processPageChange(page: number) {
+    const { query } = this.searchForm.value;
+    this.getUsers(query, page);
   }
 }
