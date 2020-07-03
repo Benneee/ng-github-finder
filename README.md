@@ -1,8 +1,8 @@
-# Github-Finder
+## Github-Finder
 
 Using the GitHub API, GitHub-Finder provides a means to search for GitHub users and provides extra information for the users found.
 
-# Getting started
+## Getting started
 
 1. cd into project folder and install dependencies:
 
@@ -15,6 +15,10 @@ npm install
 ```sh
 npm start
 ```
+
+## Deployed site
+
+[ng-github-finder](https://github-finder-sage.now.sh)
 
 ## Development server
 
@@ -29,10 +33,10 @@ Run `npm run generate -- component <name>` to generate a new component. You can 
 
 ## Tools
 
-Angular v8
-Bootstrap
-NgBootstrap
-ngx-toastr
+1. Angular v8
+2. Bootstrap
+3. NgBootstrap
+4. ngx-toastr
 
 ## Contributions
 
